@@ -205,7 +205,7 @@ sudo curl -O -L https://github.com/curl -O -L https://github.com/Polkadex-Substr
 sudo curl -O -L https://github.com/Polkadex-Substrate/parachain/releases/latest/download/polkadot-parachain-raw.json
 sudo curl -O -L https://github.com/Polkadex-Substrate/parachain/releases/latest/download/polkadot.json
 sudo chmod +x parachain-polkadex-node
-sudo curl -O -L https://github.com/Polkadex-Substrate/Polkadex/releases/download/v5.1.0/PolkadexNodeUbuntu.zip
+sudo curl -O -L https://github.com/Polkadex-Substrate/Polkadex/releases/download/v5.1.1/PolkadexNodeUbuntu.zip
 sudo unzip PolkadexNodeUbuntu.zip
 
 #and now lets set permissions for the polkadex user
