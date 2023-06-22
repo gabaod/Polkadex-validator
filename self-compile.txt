@@ -1,0 +1,35 @@
+#this was tested on ubuntu 22.04, other environments may require extra prerequisites
+#first we need to install all the prerequisites
+sudo apt install git cargo g++ pkg-config libssl-dev make protobuf-compiler clang
+
+#now we need to update rust to over 1.66 version
+#hit y and than 1 to install
+curl https://sh.rustup.rs -sSf | sh
+source "$HOME/.cargo/env"
+
+#verify its above 1.66
+rustc -V   
+
+#now lets make our test directory to build in so its seperate from everything else
+mkdir $HOME/git && cd $HOME/git
+
+#install the polkadex repository
+git clone https://github.com/Polkadex-Substrate/Polkadex
+cd Polkadex
+
+#right now we could currently compile the main branch, but if we would like to try an open pull request ie upcoming release we need to fetch that pull request number
+#the one we want currently is 818 which is 5.1.2 polkadex-node
+git fetch origin pull/818/head:818
+git switch 818
+
+#now lets compile, this can take 30 minutes
+cargo build --release
+
+#now lets stop our current node
+sudo systemctl stop validator.service
+
+#now we can replace the older version with our new compiled one
+sudo mv $HOME/git/Polkadex/target/release/polkadex-node $HOME/Polkadex/
+
+#and lets start the service back up with the updated binary
+sudo systemctl start validator.service
