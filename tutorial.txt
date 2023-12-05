@@ -201,11 +201,11 @@ sudo mkdir /home/polkadex
 cd /home/polkadex
 
 #lets download the latest parachain and solochain releases first
-sudo curl -O -L https://github.com/curl -O -L https://github.com/Polkadex-Substrate/parachain/releases/latest/download/polkadot.jsonPolkadex-Substrate/parachain/releases/latest/download/parachain-polkadex-node
-sudo curl -O -L https://github.com/Polkadex-Substrate/parachain/releases/latest/download/polkadot-parachain-raw.json
-sudo curl -O -L https://github.com/Polkadex-Substrate/parachain/releases/latest/download/polkadot.json
+sudo curl -O -L https://github.com/Polkadex-Substrate/parachain/releases/download/v1.0.0/parachain-polkadex-node
+sudo curl -O -L https://github.com/Polkadex-Substrate/parachain/releases/download/v1.0.0/polkadot-parachain-raw.json
+sudo curl -O -L https://github.com/Polkadex-Substrate/parachain/releases/download/v1.0.0/polkadot.json
 sudo chmod +x parachain-polkadex-node
-sudo curl -O -L https://github.com/Polkadex-Substrate/Polkadex/releases/download/v5.3.0/PolkadexNodeUbuntu.zip
+sudo curl -O -L https://github.com/Polkadex-Substrate/Polkadex/releases/download/v5.4.0/PolkadexNodeUbuntu.zip
 sudo unzip PolkadexNodeUbuntu.zip
 
 #and now lets set permissions for the polkadex user
@@ -214,7 +214,7 @@ sudo chown -R polkadex:polkadex /home/polkadex
 #first we need to let the parachain fully sync up before continuing make sure to change YOURNAMEHERE this will take 2+hours, if you see in telemetry at this 
 #url https://telemetry.polkadot.io/#list/0x72f3bba34b1ecd532bccbed46701ad37c4ef329bfe86b7cf014ac06cb92ed47d  if you see your node held up over 15min on producing a block
 #just cntl c and stop the process hit the up arrow and restart the process with same command until its fully syncd to the finalized block
-sudo runuser -u polkadex -- /home/polkadex/parachain-polkadex-node --chain=/home/polkdaex/polkadot-parachain-raw.json --port 40333 --ws-port 9902 --rpc-port 8844 --name "YOURNAMEHERE" --telemetry-url 'wss://telemetry.polkadot.io/submit/ 1' --bootnodes /ip4/3.108.191.170/tcp/40333/p2p/12D3KooWKi39o5WvzPTFz8W2KMqjP5c9HWoY2naYGPVF1YANCFnC -- --execution wasm --chain /home/polkadex/polkadot.json --port 30343 --ws-port 9977 --state-pruning 256 --sync warp
+sudo runuser -u polkadex -- /home/polkadex/parachain-polkadex-node --chain=/home/polkadex/polkadot-parachain-raw.json --port 40333 --ws-port 9902 --rpc-port 8844 --name "YOURNAMEHERE" --telemetry-url 'wss://telemetry.polkadot.io/submit/ 0' --bootnodes /ip4/3.108.191.170/tcp/40333/p2p/12D3KooWKi39o5WvzPTFz8W2KMqjP5c9HWoY2naYGPVF1YANCFnC -- --execution wasm --chain /home/polkadex/polkadot.json --port 30343 --ws-port 9977 --state-pruning 256 --sync warp
 
 #once the parachain is fully synced lets create its service file and restart it up as a service
 sudo nano /etc/systemd/system/parachain.service
@@ -261,7 +261,7 @@ Wants=network-online.target
 [Service]
 User=polkadex
 Group=polkadex
-ExecStart=/home/polkadex/polkadex-node --validator --chain=/home/polkadex/customSpecRaw.json --name 'YOURNAMEHERE' --telemetry-url 'wss://telemetry.polkadot.io/submit/ 1'
+ExecStart=/home/polkadex/polkadex-node --validator --chain=/home/polkadex/customSpecRaw.json --name 'YOURNAMEHERE' --telemetry-url 'wss://telemetry.polkadot.io/submit/ 0'
 Restart=on-failure
 
 [Install]
