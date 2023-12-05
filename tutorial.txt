@@ -244,6 +244,9 @@ sudo systemctl start parachain.service
 sudo systemctl status parachain
 
 #once the parachain is fully syncd up and running as service now we need to sync up the solochain datasource
+#there is a current issue with the blockchain that we cannot sync from scratch without sync=warp flag, thus its recommended to download the latest snapshot
+#from here https://polkachu.com/substrate_snapshots/polkadex and follow those steps after running the next line for 2 min and than cntl-c and exit out of it
+#(so it can create the initial db structure for you)
 sudo runuser -u polkadex -- ./polkadex-node --chain=/home/polkadex/customSpecRaw.json --pruning=archive
 
 #now as that is starting to download the blockchain we might as well continue configuring the server with a new putty client so go ahead and open
